@@ -57,3 +57,24 @@ function gotResult(error, results) {
   // Classifiy again!
   classifyVideo();
 }
+
+function gotResult(error, results) {
+  // If there is an error
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  // Check the label of the classification results
+  if (results[0].label === "stop") {
+    // Stop the program if the label is "stop"
+    noLoop();
+    return;
+  }
+
+  // The results are in an array ordered by confidence.
+  // console.log(results[0]);
+  label = results[0].label;
+  // Classify again!
+  classifyVideo();
+}
