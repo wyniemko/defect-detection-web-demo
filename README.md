@@ -1,3 +1,5 @@
+
+
 1. Develop a machine learning model that can accurately detect defects in conveyor belts, including material defects, tracking variances, and splice defects.
   a. This model should be able to process data from sensors in real-time or near real-time, and classify the defects according to their type and severity.
 
