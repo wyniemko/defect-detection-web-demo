@@ -1,4 +1,3 @@
-// Classifier Variable
 let classifier;
 // Model URL
 let imageModelURL = 'https://teachablemachine.withgoogle.com/models/dIEbPSruU/';
@@ -44,20 +43,24 @@ function classifyVideo() {
   classifier.classify(flippedVideo, gotResult);
 }
 
-// When we get a result
-function gotResult(error, results) {
-  // If there is an error
-  if (error) {
-    console.error(error);
-    return;
+function createTable(results) {
+  let table = "<table>";
+  table += "<tr><th>Mode</th><th>Confidence</th></tr>";
+  for (let i = 0; i < results.length; i++) {
+    // Use toFixed to shorten the confidence value to 2 decimal places
+    table += "<tr><td>" + results[i].label + "</td><td>" + results[i].confidence.toFixed(4) + "</td></tr>";
   }
-  // The results are in an array ordered by confidence.
-  // console.log(results[0]);
-  label = results[0].label;
-  // Classifiy again!
-  classifyVideo();
+  table += "</table>";
+  return table;
 }
 
+function printResults(results) {
+  let table = createTable(results);
+  let tableContainer = document.getElementById("table-container");
+  tableContainer.innerHTML = table;
+}
+
+// When we get a result
 function gotResult(error, results) {
   // If there is an error
   if (error) {
@@ -70,6 +73,11 @@ function gotResult(error, results) {
     // Stop the program if the label is "stop"
     noLoop();
     return;
+  }
+
+    // If the label is "defects", print the results
+  if (results[0].label === "defects") {
+    printResults(results);
   }
 
   // The results are in an array ordered by confidence.
